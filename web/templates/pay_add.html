@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block table %}
+    <div class="col-lg-offset-1">
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="form-group col-sm-6 ">
+                <label for="user" class="col-sm-3">客户姓名</label>
+                <select name="user" id="user" class="col-sm-3 form-control">
+                    {% for user in user_list %}
+                        <option value="{{ user.name }}">{{ user.name }}</option>
+                    {% endfor %}
+
+                </select>
+            </div>
+            <div class="col-sm-6 form-group ">
+                <label for="money" class="col-sm-3">消费金额</label>
+                <input type="text" class="col-sm-3 form-control" name="money">
+            </div>
+
+
+            <button class="pay_bt btn btn-success">提交</button>
+        </form>
+    </div>
+    <script>
+        $('.pay_bt').click(function () {
+            var user = $('#user').val()
+        })
+    </script>
+
+{% endblock %}

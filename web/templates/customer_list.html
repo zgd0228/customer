@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block table %}
+    {% load my_tags %}
+    <div class="btn-group" style="margin: 5px 0">
+    {% if request|has_permission:"customer_add" %}
+        <a href="/customer/add" class="btn btn-default">
+            <i class="fa fa-plus-square" aria-hidden="true"></i>
+            添加客户
+        </a>
+        {% endif %}
+    {% if request|has_permission:"customer_import" %}
+        <a href="" class="btn btn-default">
+            <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+            批量导入
+        </a>
+    {% endif %}
+    </div>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <td>ID</td>
+            <td>客户名称</td>
+            <td>年龄</td>
+            <td>邮箱</td>
+            <td>电话</td>
+            {% if request|has_permission:"customer_edit" or request|has_permission:"customer_delete" %}
+                <td>选项</td>
+            {% endif %}
+
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for users in user_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ users.name }}</td>
+                <td>{{ users.age }}</td>
+                <td>{{ users.email }}</td>
+                <td>{{ users.tel }}</td>
+                {% if request|has_permission:"customer_edit" or request|has_permission:"customer_delete" %}
+                <td>
+
+                    {% if request|has_permission:"customer_edit" %}
+                        <a style="color: #333333;" href="/customer/edit/{{ users.pk }}/">
+                        <i class="fa fa-edit" aria-hidden="true"></i></a>
+                    {% endif %}
+
+                {% if request|has_permission:"customer_delete" %}
+                    |
+                    <a style="color: #d9534f;" href="/customer/del/{{ users.pk }}/"><i class="fa fa-trash-o"></i></a>
+                {% endif %}
+                    </td>
+            {% endif %}
+
+            </tr>
+
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+{% endblock %}

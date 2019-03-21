@@ -1,0 +1,101 @@
+1、将rbac文件拷贝
+2、将migrations下面的迁移记录删除
+3、用户表的重新改造
+	Rbac下面的UserInfo表
+		class UserInfo(models.Model):
+
+			name = models.CharField(max_length=32,verbose_name='用户姓名')
+			pwd = models.CharField(max_length=64,verbose_name='密码',default='')
+			age = models.IntegerField(verbose_name='用户年龄',null=True)
+			tel = models.IntegerField(verbose_name='用户电话',blank=True,null=True)
+			email = models.EmailField(verbose_name='用户邮箱',blank=True,null=True)
+			roles = models.ManyToManyField(to=Role,verbose_name='用户角色')   #需要注意的是这里不能是字符串Role，而是类
+
+			def __str__(self):
+				return self.name
+
+			class Meta:
+				# django以后在数据迁移时不会再为其创建UserInfo表，但可以作为父类被其他类继承
+				abstract = True
+	新建用户表的UserInfo
+		from rbac.models import UserInfo as RbacUserInfo
+		class UserInfo(RbacUserInfo):
+			"""
+			用户表
+			"""
+			phone = models.CharField(verbose_name='联系方式', max_length=32)
+			level_choices = (
+				(1, 'T1'),
+				(2, 'T2'),
+				(3, 'T3'),
+			)
+			level = models.IntegerField(verbose_name='级别', choices=level_choices)
+
+			depart = models.ForeignKey(verbose_name='部门', to='Department')
+			
+	在做数据库迁移前一定要在setting中添加app，admin中注册的也要删除掉
+	
+4  rbac中的URl用户的增删改查都要删除
+		
+		# url(r'^user/list/$',user.user_list,name='user_list'),
+		# url(r'^user/add/$',user.user_add,name='user_add'),
+		# url(r'^user/edit/(?P<id>\d+)/$',user.user_edit,name='user_edit'),
+		# url(r'^user/delete/(?P<id>\d+)/$',user.user_delete,name='user_delete'),
+		# url(r'^user/reset/(?P<id>\d+)/$',user.reset_pwd,name='reset_pwd'),
+	在权限操作的视图函数中将有关用户表的内容删除
+	可在配置文件中将业务中的用户的类名写入，然后在相关的函数中调用
+		RBAC_USER_MODEL = 'app01.models.UserInfo'
+		
+	中间件
+	
+	
+	初始化配置
+		在登录时
+		init_session(request,user_obj)
+	
+	setting配置	
+		
+			# 配置业务用户表名
+			RBAC_USER_MODEL = 'app01.models.UserInfo'
+
+			# 自动获取url白名单
+			AUTO_DISCOVER_EXCLUDE = [
+				'/admin/.*',
+				'/login/',
+				'/index/',
+				'/logout/'
+			]
+
+			# 权限白名单
+			VALID_URL_LIST = ['/login/',]
+
+			# 不用权限验证名单
+			NO_PERMISSION_LIST = ['/index/','/logout']
+
+			# 权限在Session中存储的key
+			PERMISSION_SESSION_KEY = 'permission_url_list_key'
+
+			# 菜单在Session中存储的key
+			MENU_SESSION_KEY = "permission_menu_key"
+			
+	粒度控制到按钮
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

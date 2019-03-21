@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block table %}
+    {% load my_tags %}
+    <div class="btn-group" style="margin: 5px 0">
+    {% if request|has_permission:'pay_add' %}
+        <a href="/pay/add" class="btn btn-info">
+            <i class="fa fa-plus-square" aria-hidden="true"></i>
+            添加消费记录
+        </a>
+    {% endif %}
+
+    </div>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <td>ID</td>
+            <td>客户姓名</td>
+            <td>金额</td>
+            <td>支付时间</td>
+            {% if request|has_permission:'pay_edit' or request|has_permission:'pay_delete' %}
+                <td>选项</td>
+            {% endif %}
+
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for pay in pay_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ pay.customer.name }}</td>
+                <td>{{ pay.money }}</td>
+                <td>{{ pay.time|date:'Y-m-d H:i:s' }}</td>
+            {% if request|has_permission:'pay_edit' or request|has_permission:'pay_delete' %}
+            <td>
+
+                {% if request|has_permission:'pay_edit' %}
+
+                    <a style="color: #333333;" href="/pay/edit/{{ pay.pk }}/">
+                        <i class="fa fa-edit" aria-hidden="true"></i></a>
+
+                {% endif %}
+
+                    {% if request|has_permission:'pay_delete' %}
+                        |
+
+                            <a style="color: #d9534f;" href="/pay/del/{{ pay.pk }}/"><i class="fa fa-trash-o"></i></a>
+
+                    {% endif %}
+                </td>
+            {% endif %}
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+{% endblock %}

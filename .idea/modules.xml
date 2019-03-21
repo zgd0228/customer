@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../auto_luffy/.idea/auto_luffy.iml" filepath="$PROJECT_DIR$/../auto_luffy/.idea/auto_luffy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../card/.idea/card.iml" filepath="$PROJECT_DIR$/../card/.idea/card.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../card_manage/.idea/card_manage.iml" filepath="$PROJECT_DIR$/../card_manage/.idea/card_manage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/customer.iml" filepath="$PROJECT_DIR$/.idea/customer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../host/.idea/host.iml" filepath="$PROJECT_DIR$/../host/.idea/host.iml" />
+    </modules>
+  </component>
+</project>

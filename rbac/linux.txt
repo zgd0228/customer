@@ -1,0 +1,49 @@
+mkdir /data创建目录
+ls /data 查看目录
+ls -l /data 查看目录详细信息
+ls -l /d+tab键，自动补全
+cd /data 进入data目录
+pwd 显示当前位置（路径）
+
+touch 创建文件 更改文件时间戳
+touch /data/zgd.txt   在data目录中创建zgd.txt文件
+vi 记事本
+vi /data/zgd.txt  以记事本方式打开文件
+	i   进入编辑模式
+	esc 退出编辑模式
+	:wq	保存并退出
+	:q 退出
+	:q! 强制退出
+	:wq! 强制退出
+cat /data/zgd.txt 	查看文件内容
+echo hello zgd		将内容显示到屏幕上
+echo hello zgd >>/data/zgd.txt	将内容追加到zgd文件中
+cat >>/data/zgd.txt<<EOF
+I am studying linux
+EOF     追加到文件中，<<左右都不能有空格，EOF可以换做别的单词，但一定要前后匹配
+	>>(1>>)	追击重定向，把内容追加到最后一行
+	>(1>)	标准输出重定向 ，把内容清空，再把内容放到最后一行
+	2>>		追击重定向，把错误内容(错误内容就是命令执行后的报错内容，一般是命令不存在这种)追加到最后一行
+	2>		标准输出重定向 ，把内容清空，再把错误内容放到最后一行
+	ech(错误命令) hello >>/data/zgd.txt 2>&1		将错误内容与正确内容都追加文件中
+	<< 		追加输入重定向
+ctrl+c		取消当前操作
+复制cp
+	cp /data/zgd.txt /temp		将文件从data目录复制到temp目录
+	cp /data/zgd.txt /data/zgd.txt.bak 	在data目录复制文件
+	cp /data /temp		复制data文件夹到temp文件下，复制不了会报错
+	cp -r /data /temp	复制data文件夹到temp文件下,文件夹中的文件要递归复制，也就是每个文件都要确认一遍是否要复制
+	cp -a /data /temp	复制data文件夹及属性到temp文件下
+移动mv
+	mv /temp/ /root/	将temp文件夹移动到root文件夹下面
+删除rm
+	rm /data/zgd.txt	删除文件
+	rm	/data  			错误命令，不能删除
+	rm -r /data			递归删除文件夹，和cp一样
+	rm -rf /data		一次性删除文件夹
+
+
+
+
+绝对路径   从根开始的路径
+相对路径   不从根开始的路径
